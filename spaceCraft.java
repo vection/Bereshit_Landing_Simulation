@@ -6,7 +6,6 @@ public class spaceCraft {
 	public static final double WEIGHT_EMP = 165; // kg
 	public static final double WEIGHT_FULE = 420; // kg
 	public static final double WEIGHT_FULL = WEIGHT_EMP + WEIGHT_FULE; // kg
-// https://davidson.weizmann.ac.il/online/askexpert/%D7%90%D7%99%D7%9A-%D7%9E%D7%98%D7%99%D7%A1%D7%99%D7%9D-%D7%97%D7%9C%D7%9C%D7%99%D7%AA-%D7%9C%D7%99%D7%A8%D7%97
 	public static final double MAIN_ENG_F = 430; // N
 	public static final double SECOND_ENG_F = 25; // N
 	public static final double MAIN_BURN = 0.15; //liter per sec, 12 liter per m'
@@ -38,7 +37,7 @@ public class spaceCraft {
 	double distance_moved=0;
 	double fuel = 121; // Fuel
 	double weight = WEIGHT_EMP + fuel;
-	double NN = 0.7; // rate[0,1] 
+	double NN = 0.7; // rate[0,1] breaks
 	
 	MainEngine mMain = new MainEngine(this);
 	public spaceCraft() {
