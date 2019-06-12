@@ -12,8 +12,6 @@ public class spaceCraft {
 	public static final double MAIN_BURN = 0.15; //liter per sec, 12 liter per m'
 	public static final double SECOND_BURN = 0.009; //liter per sec 0.6 liter per m'
 	public static final double ALL_BURN = MAIN_BURN + 8*SECOND_BURN;
-	long startTime;
-	long endTime;
 	public static double accMax(double weight) {
 		return acc(weight, true,8);
 	}
@@ -40,7 +38,6 @@ public class spaceCraft {
 	double distance_moved=0;
 	double fuel = 121; // Fuel
 	double weight = WEIGHT_EMP + fuel;
-	//System.out.println("time, vs, hs, dist, alt, ang,weight,acc");
 	double NN = 0.7; // rate[0,1] 
 	
 	MainEngine mMain = new MainEngine(this);
@@ -49,7 +46,6 @@ public class spaceCraft {
 	}
 	public void intalize() {
 		cpu = new CPU(500,"SpaceCraft");
-		startTime = System.currentTimeMillis();
 	}
 	
 	
@@ -61,8 +57,8 @@ public class spaceCraft {
 			double v_acc = Math.cos(ang_rad)*acc;
 			double vacc = Moon.getAcc(hs);	
 			time+=dt;
-			//double as = (hs/dist)/Math.toRadians(Math.PI*2); // Thinking it's Angular speed per second.
-			//ang += as;
+			double as = (hs/dist)/Math.toRadians(Math.PI*2); // Thinking it's Angular speed per second.
+			ang += as;
 			double dw = dt*ALL_BURN*NN;
 			if(fuel>0) {
 				fuel -= dw;
@@ -81,8 +77,8 @@ public class spaceCraft {
 			alt -= dt*vs;  // updating alltitude
 			distance_moved += hs*dt;
 			if(debug) {
-				endTime = System.currentTimeMillis();
-				System.out.println("Time: "+time+" Height: "+alt +" VS: "+ vs + " HS: "+hs +" Weight: "+weight +" Acceleration: " +acc +"Rotation: "+ang+" Distance: "+(distance_moved/1000)+" km");
+				if(time % 10 == 0 || time > 560) 
+				  System.out.println("Time: "+time+" Height: "+alt +" VS: "+ vs + " HS: "+hs +" Weight: "+weight +" Acceleration: " +acc +"Rotation: "+ang+" Distance: "+(distance_moved/1000)+" km");
 			}
 		}
 		
@@ -104,31 +100,18 @@ public class spaceCraft {
 			else {
 				if(ang>3) { mMain.startStabalize(); }
 				if(ang > 20) {
-					NN = 0.6;
+					NN = 0.63;
 				}
 				else {
 					NN = 0.55;
 				}
 				if(hs<2) {hs=0;}
 				if(alt<125) { // very close to the ground!
-					NN=1; // maximum braking!
-					if(vs<5) {NN=0.7;} // if it is slow enough - go easy on the brakes 
+					if(vs<5) {NN=0.7;} 
+					else { NN = 1; }// if it is slow enough - go easy on the brakes 
 				}
 			}
-			if(alt<5) {
-				NN=0.4;
-			}
 		}
-	}
-	public static void drawCircle(Graphics g, int x, int y, int radius) {
-
-		  int diameter = radius * 2;
-		  g.fillOval(x - radius, y - radius, diameter, diameter); 
-
-	}
-	
-	public double getCraftgyro() {
-		return Math.toRadians(ang);
 	}
  	
 
