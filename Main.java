@@ -15,7 +15,7 @@ public class Main{
 		painterCPU.addFunction(frame::repaint);
 		painterCPU.play();
 		
-		CPU updatesCPU = new CPU(10,"updates");
+		CPU updatesCPU = new CPU(4,"updates"); 
 		updatesCPU.addFunction(mCraft::update);
 		updatesCPU.addFunction(mCraft::startLanding);
 		updatesCPU.addFunction(mCraft.mMain::Stabalize);

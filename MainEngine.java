@@ -41,9 +41,11 @@ public class MainEngine {
 		DownLeft2 = new Engine(this,-0.75);
 		mStatus = Status.BeforeLanding;
 	}
+	// Entering to final landing status
 	public void startFinalLanding() {
 		mStatus = mStatus.Landing;
 	}
+	// start stabilize status
 	public void startStabalize() {
 		start = true;
 	}
@@ -75,14 +77,10 @@ public class MainEngine {
 					Right2.Stabilize();
 				}	
 			}
-			else if(mStatus == mStatus.Landing) {	
-				if(current_rotation > balance_to+35) {
+			else if(mStatus == mStatus.Landing) {	// three small engines stabilize 
 					DownRight1.Stabilize();
+					Right1.Stabilize();
 					DownLeft1.Stabilize();
-				}
-				else {
-					DownRight1.Stabilize();
-				}
 			}
 		}
 	}

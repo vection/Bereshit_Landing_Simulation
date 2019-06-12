@@ -13,7 +13,9 @@ public class Engine {
 	
 	
 	public void Stabilize() {
-	    mEngine.mSpace.ang += power*power_to_rotation;
+		if(mEngine.mSpace.ang > 0) {
+			mEngine.mSpace.ang += power*power_to_rotation;
+		}
 	}
 	
 	
